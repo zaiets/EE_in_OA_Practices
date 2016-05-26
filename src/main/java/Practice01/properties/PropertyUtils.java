@@ -10,7 +10,7 @@ public class PropertyUtils {
     public static Properties getProperties() {
         if (properties == null) {
             properties = new Properties();
-            try (InputStream in = PropertyUtils.class.getClassLoader().getResourceAsStream("Practice01/EEdb.properties")) {
+            try (InputStream in = PropertyUtils.class.getClassLoader().getResourceAsStream("Practice01/Practice01_jdbc.properties")) {
                 properties.load(in);
             } catch (IOException e) {
                e.printStackTrace();

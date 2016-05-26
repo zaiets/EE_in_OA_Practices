@@ -1,4 +1,4 @@
-package Practice01.jdbc.implsql;
+package Practice01.jdbc.daoImplSql;
 
 import Practice01.jdbc.ConnectionProvider;
 import Practice01.jdbc.IDao;
@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static Practice01.jdbc.sqls.AuthorsSQLs.*;
+import static Practice01.jdbc.daoImplSql.sqls.AuthorsSQLs.*;
 
 public class DaoAuthorImpl implements IDao<Author> {
 
