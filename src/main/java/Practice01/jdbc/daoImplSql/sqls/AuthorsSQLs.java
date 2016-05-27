@@ -3,7 +3,7 @@ package Practice01.jdbc.daoImplSql.sqls;
 public final class AuthorsSQLs {
     private AuthorsSQLs(){}
 
-    public static final String SQL_CREATE = "CREATE TABLE IF NOT EXISTS AUTHORS(ID INT NOT NULL AUTO_INCREMENT, " +
+    public static final String SQL_CREATE = "CREATE TABLE IF NOT EXISTS AUTHORS (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
             "FIRST_NAME TEXT, LAST_NAME TEXT, BIRTHDAY DATE)";
     public static final String SQL_INSERT = "INSERT INTO AUTHORS (FIRST_NAME, LAST_NAME, BIRTHDAY) VALUES (?, ?, ?)";
     public static final String SQL_SELECT_ALL = "SELECT * FROM AUTHORS";

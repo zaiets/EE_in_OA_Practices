@@ -3,7 +3,7 @@ package Practice01.jdbc.daoImplSql.sqls;
 public final class AudiosSQLs {
     private AudiosSQLs(){}
 
-    public static final String SQL_CREATE = "CREATE TABLE IF NOT EXISTS AUDIOS(ID INT NOT NULL AUTO_INCREMENT, " +
+    public static final String SQL_CREATE = "CREATE TABLE IF NOT EXISTS AUDIOS (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
             "TITLE TEXT, DURATION INT, YEAR INT)";
     public static final String SQL_INSERT = "INSERT INTO AUDIOS(TITLE, DURATION, YEAR) VALUES (?, ?, ?)";
     public static final String SQL_SELECT_ALL = "SELECT * FROM AUDIOS";
