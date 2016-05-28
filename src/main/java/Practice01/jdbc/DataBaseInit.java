@@ -2,8 +2,6 @@ package Practice01.jdbc;
 
 
 import Practice01.jdbc.daoImplSql.UtilsMySql;
-import Practice01.jdbc.daoImplSql.sqls.AudiosSQLs;
-import Practice01.jdbc.daoImplSql.sqls.AuthorsSQLs;
 import Practice01.properties.PropertyUtils;
 
 import java.util.Properties;
@@ -24,8 +22,8 @@ public final class DataBaseInit {
                         SQL_AUTORS_AUDIOS_DROP,
                         SQL_AUTHORS_DROP,
                         SQL_AUDIOS_DROP,
-                        AudiosSQLs.SQL_CREATE,
-                        AuthorsSQLs.SQL_CREATE,
+                        SQL_AUDIOS_CREATE,
+                        SQL_AUTHORS_CREATE,
                         SQL_AUTORS_AUDIOS_CREATE,
                 };
                 break;
