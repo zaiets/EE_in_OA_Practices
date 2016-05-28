@@ -35,7 +35,7 @@ public class DaoAuthorImplTest {
 
             Audio audio = new Audio();
             audio.setTitle("Song N".concat(String.valueOf(i)));
-            audio.setDuration(i);
+            audio.setDuration(1+i);
             audio.setYear(1980+i);
             audioDao.create(audio);
         }
