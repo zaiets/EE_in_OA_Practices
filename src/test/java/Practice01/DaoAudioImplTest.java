@@ -15,6 +15,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class DaoAudioImplTest {
@@ -206,9 +208,11 @@ public class DaoAudioImplTest {
     }
 
     @Test
-    public void selectByYearWithAuthorsTest() throws Exception {
-        //TODO
-        Assert.fail();
+    public void selectByYearWithAuthorsTest01() throws Exception {
+        Map<Audio, List<Author>> resultMap = audioDao.selectByYearWithAuthors(2001);
+        int sizeExpected = 2;
+        Assert.assertTrue(resultMap.containsKey(audioExpected));
+        Assert.assertEquals("Audio test 'selectByYearWithAuthors' 01 - size", sizeExpected, resultMap.get(audioExpected).size());
     }
 
     @Test

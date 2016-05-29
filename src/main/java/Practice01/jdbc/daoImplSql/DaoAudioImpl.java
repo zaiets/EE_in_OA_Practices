@@ -148,6 +148,7 @@ public class DaoAudioImpl implements IDao<Audio> {
                 Audio audio = new Audio();
                 audio.setId(rs.getInt("ID"));
                 audio.setTitle(rs.getString("TITLE"));
+                audio.setDuration(rs.getInt("DURATION"));
                 audio.setYear(rs.getInt("YEAR"));
 
                 Author author = new Author();
