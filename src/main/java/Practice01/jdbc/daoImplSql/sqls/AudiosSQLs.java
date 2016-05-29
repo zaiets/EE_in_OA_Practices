@@ -12,12 +12,12 @@ public final class AudiosSQLs {
 
     //Получить список аудиозаписей по автору
     public static final String SQL_SELECT_BY_AUTHOR = "SELECT AUDIOS.ID, AUDIOS.TITLE, AUDIOS.DURATION, AUDIOS.YEAR FROM AUDIOS " +
-            "JOIN AUTHORS_AUDIOS ON AUDIOS.ID = AUTHORS_AUDIOS.AUDIO_ID WHERE AUTHORS_AUDIOS.AUTHORS_ID = ?";
+            "JOIN AUTHORS_AUDIOS ON AUDIOS.ID = AUTHORS_AUDIOS.AUDIO_ID WHERE AUTHORS_AUDIOS.AUTHOR_ID = ?";
 
     //Получить список аудиозаписей по автору написаный в указаный год
     public static final String SQL_SELECT_BY_AUTHOR_WITH_YEAR = "SELECT AUDIOS.ID, AUDIOS.TITLE, AUDIOS.DURATION, AUDIOS.YEAR " +
             "FROM AUDIOS JOIN AUTHORS_AUDIOS ON AUDIOS.ID = AUTHORS_AUDIOS.AUDIO_ID " +
-            "WHERE AUTHORS_AUDIOS.AUTHORS_ID = ? AND AUDIOS.YEAR = ?";
+            "WHERE AUTHORS_AUDIOS.AUTHOR_ID = ? AND AUDIOS.YEAR = ?";
 
     //Получить список аудиозаписей в указаный год с информацией об исполнителях (см. H4, L4)
     public static final String SQL_SELECT_BY_YEAR_WITH_AUTHOR = "SELECT * " +

@@ -20,7 +20,8 @@ import java.util.Set;
 public class DaoAudioImplTest {
     DaoAuthorImpl authorDao;
     DaoAudioImpl audioDao;
-    Author authorExpected;
+    Author author1;
+    Author author2;
     Audio audioExpected;
 
     @Before
@@ -28,11 +29,16 @@ public class DaoAudioImplTest {
         authorDao = new DaoAuthorImpl();
         audioDao = new DaoAudioImpl();
 
-        authorExpected = new Author();
-        authorExpected.setId(1);
-        authorExpected.setFirstName("Author");
-        authorExpected.setLastName("N1");
-        authorExpected.setBirthday(Date.valueOf(LocalDate.of(1980, 1, 1)));
+        author1 = new Author();
+        author1.setId(1);
+        author1.setFirstName("Author");
+        author1.setLastName("N1");
+        author1.setBirthday(Date.valueOf(LocalDate.of(1980, 1, 1)));
+        author2 = new Author();
+        author2.setId(2);
+        author2.setFirstName("Author");
+        author2.setLastName("N2");
+        author2.setBirthday(Date.valueOf(LocalDate.of(1981, 2, 2)));
 
         audioExpected = new Audio();
         audioExpected.setId(1);
@@ -75,16 +81,10 @@ public class DaoAudioImplTest {
                 ps.setInt(2, 1);
                 ps.executeUpdate();
                 ps.setInt(1, 2);
-                ps.setInt(2, 1);
-                ps.executeUpdate();
-                ps.setInt(1, 2);
                 ps.setInt(2, 2);
                 ps.executeUpdate();
                 ps.setInt(1, 2);
-                ps.setInt(2, 3);
-                ps.executeUpdate();
-                ps.setInt(1, 3);
-                ps.setInt(2, 3);
+                ps.setInt(2, 1);
                 ps.executeUpdate();
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -162,9 +162,10 @@ public class DaoAudioImplTest {
     @Test
     public void deleteTest01(){
         Audio audio = new Audio();
-        audio.setTitle("Song N4");
-        audio.setDuration(4);
-        audio.setYear(2004);
+        audio.setId(3);
+        audio.setTitle("Song N3");
+        audio.setDuration(3);
+        audio.setYear(2003);
         Assert.assertEquals("Audio test 'delete' 01", audio, audioDao.delete(audio));
     }
 
@@ -179,22 +180,40 @@ public class DaoAudioImplTest {
     }
 
     @Test
-    public void readByAuthorTest() throws Exception {
-        Assert.fail();
+    public void readByAuthorTest01() throws Exception {
+        Set<Audio> actual = audioDao.readByAuthor(author1);
+        int sizeExpected = 1;
+        Assert.assertEquals("Audio test 'readByAuthor' 01", sizeExpected, actual.size());
     }
 
     @Test
-    public void readByAuthorAndYearTest() throws Exception {
-        Assert.fail();
+    public void readByAuthorTest02() throws Exception {
+        Set<Audio> actual = audioDao.readByAuthor(author1);
+        Assert.assertTrue(actual.contains(audioExpected));
+    }
+
+    @Test
+    public void readByAuthorAndYearTest01() throws Exception {
+        Set<Audio> actual = audioDao.readByAuthorAndYear(author2, 2002);
+        int sizeExpected = 1;
+        Assert.assertEquals("Audio test 'readByAuthor' 01", sizeExpected, actual.size());
+    }
+
+    @Test
+    public void readByAuthorAndYearTest02() throws Exception {
+        Set<Audio> actual = audioDao.readByAuthorAndYear(author1, 2001);
+        Assert.assertTrue(actual.contains(audioExpected));
     }
 
     @Test
     public void selectByYearWithAuthorsTest() throws Exception {
+        //TODO
         Assert.fail();
     }
 
     @Test
     public void readByOldestAuthorTest() throws Exception {
+        //TODO
         Assert.fail();
     }
 }
