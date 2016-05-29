@@ -4,10 +4,8 @@ import Practice01.jdbc.ConnectionProvider;
 import Practice01.jdbc.IDao;
 import Practice01.model.Author;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -77,6 +75,7 @@ public class DaoAuthorImpl implements IDao<Author> {
             ps.setString(1, author.getFirstName());
             ps.setString(2, author.getLastName());
             ps.setDate(3, author.getBirthday());
+            ps.setInt(4, author.getId());
             if (ps.executeUpdate() == 1) return author;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,11 +94,11 @@ public class DaoAuthorImpl implements IDao<Author> {
         return null;
     }
 
-    public Set<Author> selectByAgeDiap (int startAge, int endAge) {
-        Set<Author> authors = new LinkedHashSet<>();
+    public Set<Author> selectByAgeDiap (Date startAge, Date endAge) {
+        Set<Author> authors = new HashSet<>();
         try (PreparedStatement ps = ConnectionProvider.getConnection().prepareStatement(SQL_SELECT_BY_AGE_DIAP)) {
-            ps.setInt(1, startAge);
-            ps.setInt(2, endAge);
+            ps.setDate(1, startAge);
+            ps.setDate(2, endAge);
             ResultSet rs = ps.executeQuery();
             Author author;
             while (rs.next()) {
@@ -116,19 +115,19 @@ public class DaoAuthorImpl implements IDao<Author> {
         return authors;
     }
 
-    public Set<Author> selectByBirthdayIn (int[] ages) {
+    public Set<Author> selectByBirthdayIn (Date[] years) {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append(SQL_SELECT_BY_BIRTHDAY_IN);
-        sqlBuilder.append('(');
-        for (int i: ages) {
-            sqlBuilder.append(ages[i]);
-            sqlBuilder.append(", ");
+        sqlBuilder.append("(");
+        for (Date date: years) {
+            sqlBuilder.append("'");
+            sqlBuilder.append(date);
+            sqlBuilder.append("', ");
         }
-        sqlBuilder.append(ages[ages.length-1]);
-        sqlBuilder.append(')');
+        sqlBuilder.replace(sqlBuilder.lastIndexOf(","), sqlBuilder.capacity(), ")");
         String sql = sqlBuilder.toString();
 
-        Set<Author> authors = new LinkedHashSet<>();
+        Set<Author> authors = new HashSet<>();
         try (Statement st = ConnectionProvider.getConnection().createStatement()) {
             ResultSet rs = st.executeQuery(sql);
             Author author;

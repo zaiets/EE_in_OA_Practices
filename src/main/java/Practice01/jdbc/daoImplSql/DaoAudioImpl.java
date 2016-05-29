@@ -77,6 +77,7 @@ public class DaoAudioImpl implements IDao<Audio> {
             ps.setString(1, audio.getTitle());
             ps.setInt(2, audio.getDuration());
             ps.setInt(3, audio.getYear());
+            ps.setInt(4, audio.getId());
             if (ps.executeUpdate() == 1) return audio;
         } catch (SQLException e) {
             e.printStackTrace();

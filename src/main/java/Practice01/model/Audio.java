@@ -37,4 +37,27 @@ public class Audio {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Audio audio = (Audio) o;
+
+        if (getId() != audio.getId()) return false;
+        if (getYear() != audio.getYear()) return false;
+        if (getDuration() != audio.getDuration()) return false;
+        return getTitle() != null ? getTitle().equals(audio.getTitle()) : audio.getTitle() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
+        result = 31 * result + getYear();
+        result = 31 * result + getDuration();
+        return result;
+    }
 }
