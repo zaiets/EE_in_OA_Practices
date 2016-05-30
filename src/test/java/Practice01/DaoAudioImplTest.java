@@ -57,7 +57,7 @@ public class DaoAudioImplTest {
         try (Connection connection = ConnectionProvider.getConnection()) {
             //Заполнение аудио перед тестом
             try (PreparedStatement ps = connection.prepareStatement(add_audio)) {
-                for (int i = 1; i < 4; i++) {
+                for (int i = 1; i < 5; i++) {
                     ps.setString(1, "Song N".concat(String.valueOf(i)));
                     ps.setInt(2, i);
                     ps.setInt(3, 2000 + i);
@@ -68,7 +68,7 @@ public class DaoAudioImplTest {
             }
             //Заполнение авторов перед тестом
             try (PreparedStatement ps = connection.prepareStatement(add_author)) {
-                for (int i = 1; i < 4; i++) {
+                for (int i = 1; i < 5; i++) {
                     ps.setString(1, "Author");
                     ps.setString(2, "N".concat(String.valueOf(i)));
                     ps.setDate(3, Date.valueOf(LocalDate.of(1980+i, 1, 1)));
@@ -88,6 +88,9 @@ public class DaoAudioImplTest {
                 ps.setInt(1, 2);
                 ps.setInt(2, 1);
                 ps.executeUpdate();
+                ps.setInt(1, 4);
+                ps.setInt(2, 4);
+                ps.executeUpdate();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -102,7 +105,7 @@ public class DaoAudioImplTest {
         audio.setTitle("Song N4");
         audio.setDuration(4);
         audio.setYear(2004);
-        int expectedId = 4;
+        int expectedId = 5;
         Assert.assertEquals("Audio test 'create' 01", expectedId, audioDao.create(audio).getId());
     }
 
@@ -118,18 +121,21 @@ public class DaoAudioImplTest {
 
     @Test
     public void readTest02() throws Exception {
-        Assert.assertNull(audioDao.read(10));
+        int wrongId = 10;
+        Assert.assertNull(audioDao.read(wrongId));
     }
 
     @Test
     public void readTest03() throws Exception {
-        Assert.assertNull(audioDao.read(-1));
+        int wrongId = -1;
+        Assert.assertNull(audioDao.read(wrongId));
     }
 
     @Test
     public void readAllTest01() throws Exception {
         Set<Audio> set = audioDao.readAll();
-        Assert.assertEquals("Audio test 'readAll' 01", 3, set.size());
+        int sizeExpected = 4;
+        Assert.assertEquals("Audio test 'readAll' 01", sizeExpected, set.size());
     }
 
     @Test
@@ -209,15 +215,18 @@ public class DaoAudioImplTest {
 
     @Test
     public void selectByYearWithAuthorsTest01() throws Exception {
-        Map<Audio, List<Author>> resultMap = audioDao.selectByYearWithAuthors(2001);
+        Map<Audio, List<Author>> actual = audioDao.selectByYearWithAuthors(2001);
         int sizeExpected = 2;
-        Assert.assertTrue(resultMap.containsKey(audioExpected));
-        Assert.assertEquals("Audio test 'selectByYearWithAuthors' 01 - size", sizeExpected, resultMap.get(audioExpected).size());
+        Assert.assertTrue(actual.containsKey(audioExpected));
+        Assert.assertEquals("Audio test 'selectByYearWithAuthors' 01 - size", sizeExpected, actual.get(audioExpected).size());
     }
 
     @Test
-    public void readByOldestAuthorTest() throws Exception {
-        //TODO
-        Assert.fail();
+    public void readByOldestAuthorTest01() throws Exception {
+        Set<Audio> actual = audioDao.readByOldestAuthor();
+        int sizeExpected = 1;
+        int oldestAuthorsSongId = 4;
+        Assert.assertTrue(actual.iterator().next().getId() == oldestAuthorsSongId);
+        Assert.assertEquals("Audio test 'readByOldestAuthor' 01 - size", sizeExpected, actual.size());
     }
 }
