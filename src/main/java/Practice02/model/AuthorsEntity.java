@@ -2,17 +2,36 @@ package Practice02.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
+/**
+ * Created by Levsha on 30.05.2016.
+ */
 @Entity
-@Table(name = "authors", schema = "practice")
+@Table(name = "authors", schema = "practice2")
 public class AuthorsEntity {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private Date birthday;
-
     @Id
     @Column(name = "ID")
+    private int id;
+    @Basic
+    @Column(name = "FIRST_NAME")
+    private String firstName;
+    @Basic
+    @Column(name = "LAST_NAME")
+    private String lastName;
+    @Basic
+    @Column(name = "BIRTHDAY")
+    private Date birthday;
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private GroupsEntity group;
+    @ManyToMany
+    @JoinTable(name = "authors_audios",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "audio_id"))
+    private Set<AudiosEntity> audios;
+
+
     public int getId() {
         return id;
     }
@@ -21,8 +40,7 @@ public class AuthorsEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "FIRST_NAME")
+
     public String getFirstName() {
         return firstName;
     }
@@ -31,8 +49,7 @@ public class AuthorsEntity {
         this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "LAST_NAME")
+
     public String getLastName() {
         return lastName;
     }
@@ -41,14 +58,29 @@ public class AuthorsEntity {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "BIRTHDAY")
+
     public Date getBirthday() {
         return birthday;
     }
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public GroupsEntity getGroup() {
+        return group;
+    }
+
+    public void setGroup(GroupsEntity group) {
+        this.group = group;
+    }
+
+    public Set<AudiosEntity> getAudios() {
+        return audios;
+    }
+
+    public void setAudios(Set<AudiosEntity> audios) {
+        this.audios = audios;
     }
 
     @Override
@@ -58,20 +90,24 @@ public class AuthorsEntity {
 
         AuthorsEntity that = (AuthorsEntity) o;
 
-        if (id != that.id) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
+        if (getId() != that.getId()) return false;
+        if (getFirstName() != null ? !getFirstName().equals(that.getFirstName()) : that.getFirstName() != null)
+            return false;
+        if (getLastName() != null ? !getLastName().equals(that.getLastName()) : that.getLastName() != null)
+            return false;
+        if (getBirthday() != null ? !getBirthday().equals(that.getBirthday()) : that.getBirthday() != null)
+            return false;
+        return getGroup() != null ? getGroup().equals(that.getGroup()) : that.getGroup() == null;
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        int result = getId();
+        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
+        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+        result = 31 * result + (getBirthday() != null ? getBirthday().hashCode() : 0);
+        result = 31 * result + (getGroup() != null ? getGroup().hashCode() : 0);
         return result;
     }
 }
